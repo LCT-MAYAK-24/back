@@ -1,6 +1,6 @@
 from fastapi import FastAPI, APIRouter, BackgroundTasks, Header, Query
 from gigachat.service import get_conversation, create_conversation, create_message
-from models.tour_generation.search import search
+# from models.tour_generation.search import search
 from pydantic import BaseModel
 from typing import Optional
 from fastapi.middleware.cors import CORSMiddleware
