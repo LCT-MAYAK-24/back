@@ -73,9 +73,9 @@ def get_hints_route():
         "Туристический маршрут в Казань"
     ]
 
-@app.post('/api/search', tags=['Search'])
-def seearh_route(data: str):
-    return search(data)
+# @app.post('/api/search', tags=['Search'])
+# def seearh_route(data: str):
+#     return search(data)
 
 class SalutModel(BaseModel):
     text: str
