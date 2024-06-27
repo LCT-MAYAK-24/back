@@ -12,3 +12,15 @@ class Feedback(Model):
 
     class Meta:
         database = db
+    
+    def to_json(self):
+        lat, lon = self.lat, self.lon
+        if lat is None:
+            lat = self.place.lat
+        if lon is None:
+            lon = self.place.lon
+        return {
+            'lat': lat,
+            'lon': lon,
+            'reason': self.reason
+        }

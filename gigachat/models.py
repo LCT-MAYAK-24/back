@@ -71,6 +71,9 @@ class Conversation(GigachatModel):
         return [
             m.to_prompt() for m in self.messages
         ]
+    
+    def get_last_message_text(self):
+        return self.get_messages()[-1]['content']
 
 
 def from_string_to_places(string, user_id):
@@ -122,13 +125,12 @@ class Message(GigachatModel):
         user_lon, 
         user_id
     ):
-
         conversation.is_generating = True
         conversation.save()
         messages = conversation.to_model()
         if len(messages) > 10:
             messages = [messages[0]] + messages[-10:]
-
+        print(len(messages))
         if len(messages) == 0:
             answer, content = build_start_message(
                 user_lat,
@@ -140,6 +142,7 @@ class Message(GigachatModel):
         else:
             answer = call(content, messages)
             msg_type = 'model'
+        print('fuck')
         
         Message.create(text=content, conversation=conversation, role='user')
 

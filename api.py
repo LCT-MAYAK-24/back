@@ -85,15 +85,14 @@ def salut_route(
     data: str, 
     background: BackgroundTasks,
 ):
+    print('start', data)
     conversation: Conversation = Conversation.create(name='переписка')
-    Message.create_user_message(data, conversation)
+    Message.create_user_message(data, conversation, 0, 0, 1)
     path_generated = True
     try:
-        tour_msg = conversation.get_salut_message()
+        tour_msg = conversation.get_last_message_text()
     except Exception as e:
-        print(e)
         conversation.get_messages()[-1]
         tour_msg = conversation.get_messages()[-1]['content']
         path_generated = False
-    print(tour_msg)
     return {'answer': tour_msg, 'path_generated': path_generated}

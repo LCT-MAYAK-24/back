@@ -39,7 +39,6 @@ def chat_completion(messages):
 
 def build_start_message(user_lat, user_lon, user_id, first_question):
     from users.models import User, Place
-    print(user_id)
     user: User = User.get(id=user_id)
     user_prompt = user.get_prompt()
     place_prompts = []
@@ -52,16 +51,23 @@ def build_start_message(user_lat, user_lon, user_id, first_question):
 {user_prompt}
 
 А вот база данных объектов, которые надо рекомендовать или составлять из них туры:
-{"".join([place[0] for place in place_prompts[0:300]])}
+{"".join([place[0] for place in place_prompts[0:100]])}
 Важно: В своем ответе в точности указывай названия мест которых рекомендуешь и ничего не меняй в них
 Используй только данные тебе объекты, ничего не придумывай
 Первый вопрос от этого пользователя: {first_question}
+Отвечай кратко, не более 100 слов.
+Do not use Markdown.
+Не используй маркдаун.
+Не пиши в ответе никакие английские буквы
 '''
-    return call(prompt, []), prompt
+    answer = call(prompt, [])
+    if user_lat == 0 and user_lon == 0:
+        answer = answer.replace('\\', '').replace('n', '').replace('*', '')
+    return answer, prompt
 
 
 def call(prompt, history):
-    url = "http://127.0.0.1:5000/history"
+    url = "http://127.0.0.1:4000/history"
     payload = json.dumps({
         "data": prompt,
         "history": history

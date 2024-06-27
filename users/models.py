@@ -95,9 +95,12 @@ class Place(Model):
         p1 = (user_lat, user_lon)
         p2 = (self.lat, self.lon)
         dist = distance.geodesic(p1, p2).km
+        dist_prompt = ''
+        if dist < 100:
+            dist_prompt = f'Расстояние места до данного пользователя: {dist:.2f} километров'
         return f'''Место: {self.name}
 Доступность для инвалидной коляски: {accesibility_decoding[self.wheelchair_accesibility_level]}
 Доступность в передвижении: {accesibility_decoding[self.movement_accesibility_level]}
 Доступность для слабослышащих: {accesibility_decoding[self.movement_accesibility_level]}
-Расстояние места до данного пользователя: {dist:.2f} километров\n\n
+{dist_prompt}\n\n
 ''', dist
