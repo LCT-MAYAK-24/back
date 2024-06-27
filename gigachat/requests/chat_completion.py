@@ -67,7 +67,7 @@ Do not use Markdown.
 
 
 def call(prompt, history):
-    url = "http://127.0.0.1:4000/history"
+    url = "http://127.0.0.1:5000/history"
     payload = json.dumps({
         "data": prompt,
         "history": history
