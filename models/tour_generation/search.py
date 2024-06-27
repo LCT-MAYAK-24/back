@@ -3,7 +3,6 @@ from .filter_places import data, load_data
 
 
 from transformers import AutoTokenizer, AutoModel
-import torch
 
 
 #Mean Pooling - Take attention mask into account for correct averaging
